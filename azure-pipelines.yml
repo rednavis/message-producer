@@ -20,3 +20,5 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+    codeCoverageToolOption: JaCoCo
+    codeCoverageClassFilter: '-:com.rednavis.demo.kafka.messageproducer.MessageProducerApplication,-:com.rednavis.demo.kafka.messageproducer.dto.ItemDto,-:com.rednavis.demo.kafka.messageproducer.ServletInitializer,-:com.rednavis.demo.kafka.messageproducer.config.SwaggerConfig'

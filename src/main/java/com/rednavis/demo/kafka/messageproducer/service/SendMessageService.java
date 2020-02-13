@@ -19,8 +19,8 @@ public class SendMessageService {
   public void sendGeneratedMessage() {
     ItemDto item = ItemDto.builder()
         .name("Item " + rnd.nextInt())
-        .amount(rnd.nextInt(1000))
-        .price(rnd.nextDouble())
+        .amount(rnd.nextInt(999) + 1)
+        .price(rnd.nextDouble() * rnd.nextInt(10000))
         .description("Some basic description.")
         .isPublic(true)
         .build();
