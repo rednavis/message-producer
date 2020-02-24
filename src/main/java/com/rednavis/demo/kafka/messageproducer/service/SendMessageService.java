@@ -2,32 +2,32 @@ package com.rednavis.demo.kafka.messageproducer.service;
 
 import java.util.Random;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
-import com.rednavis.demo.kafka.messageproducer.dto.ItemDto;
+import com.rednavis.demo.kafka.messageproducer.dto.ItemRQDto;
 import lombok.AllArgsConstructor;
 
 @Service
-@EnableBinding(Source.class)
+@EnableBinding(Processor.class)
 @AllArgsConstructor
 public class SendMessageService {
 
-  private final Source source;
+  private final Processor processor;
   private final Random rnd = new Random();
 
   public void sendGeneratedMessage() {
-    ItemDto item = ItemDto.builder()
+    ItemRQDto item = ItemRQDto.builder()
         .name("Item " + rnd.nextInt())
         .amount(rnd.nextInt(999) + 1)
         .price(rnd.nextDouble() * rnd.nextInt(10000))
         .description("Some basic description.")
         .isPublic(true)
         .build();
-    source.output().send(MessageBuilder.withPayload(item).build());
+    processor.output().send(MessageBuilder.withPayload(item).build());
   }
 
-  public void sendUserMessage(ItemDto item) {
-    source.output().send(MessageBuilder.withPayload(item).build());
+  public void sendUserMessage(ItemRQDto item) {
+    processor.output().send(MessageBuilder.withPayload(item).build());
   }
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ItemDto {
+public class ItemRQDto {
 
   @NotEmpty(message = "Should not be empty")
   private String name;

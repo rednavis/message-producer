@@ -1,7 +1,6 @@
 package com.rednavis.demo.kafka.messageproducer.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,19 +11,19 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import com.rednavis.demo.kafka.messageproducer.dto.ItemDto;
+import com.rednavis.demo.kafka.messageproducer.dto.ItemRQDto;
 
 class SendMessageServiceTest {
 
   @Mock
-  private Source sourceMock;
+  private Processor sourceMock;
   @Mock
   private MessageChannel channelMock;
   @Captor
-  private ArgumentCaptor<Message<ItemDto>> messageCaptor;
+  private ArgumentCaptor<Message<ItemRQDto>> messageCaptor;
 
   SendMessageService uut;
 
@@ -40,8 +39,8 @@ class SendMessageServiceTest {
     uut.sendGeneratedMessage();
 
     verify(channelMock, times(1)).send(messageCaptor.capture());
-    Message<ItemDto> value = messageCaptor.getValue();
-    ItemDto payload = value.getPayload();
+    Message<ItemRQDto> value = messageCaptor.getValue();
+    ItemRQDto payload = value.getPayload();
     assertThat(payload).isNotNull();
     assertThat(payload.getName()).startsWith("Item ");
     assertThat(payload.getAmount()).isNotNull().isBetween(0, 1000);
@@ -52,7 +51,7 @@ class SendMessageServiceTest {
 
   @Test
   void sendUserMessage() {
-    ItemDto item = ItemDto
+    ItemRQDto item = ItemRQDto
         .builder()
         .name("name")
         .amount(1)

@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rednavis.demo.kafka.messageproducer.dto.ItemDto;
+import com.rednavis.demo.kafka.messageproducer.dto.ItemRQDto;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,7 +36,7 @@ class MessageProducerIntegrationTest {
 
   @Test
   void addItemValid() throws Exception {
-    ItemDto validItem = ItemDto.builder()
+    ItemRQDto validItem = ItemRQDto.builder()
         .name("Not empty")
         .amount(15)
         .price(10D)
@@ -58,7 +58,7 @@ class MessageProducerIntegrationTest {
 
   @Test
   void addItemInvalid() throws Exception {
-    ItemDto invalidItem = ItemDto.builder()
+    ItemRQDto invalidItem = ItemRQDto.builder()
         .name("")
         .amount(0)
         .price(-1D)
