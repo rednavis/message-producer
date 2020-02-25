@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.rednavis.demo.kafka.messageproducer.dto.ItemRSDto;
+import com.rednavis.demo.kafka.messageproducer.exception.CacheIsEmptyException;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -23,6 +24,9 @@ public class ListMessageService {
       .build();
 
   public List<ItemRSDto> getItems() {
+    if (cache.estimatedSize() == 0) {
+      throw new CacheIsEmptyException();
+    }
     return new ArrayList<>(cache.asMap().values());
   }
 

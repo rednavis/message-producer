@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.json.JSONObject;
+import com.rednavis.demo.kafka.messageproducer.exception.CacheIsEmptyException;
 
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
@@ -31,4 +32,10 @@ public class ExceptionHandlerAdvice {
     });
     return new JSONObject(errors).toString();
   }
+
+  @ExceptionHandler(CacheIsEmptyException.class)
+  @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "No entries found")
+  public void handleEmptyCacheException() {
+  }
+
 }
